@@ -1,3 +1,11 @@
+isc-kea (1.1.0-1) UNRELEASED; urgency=medium
+
+  * Non-maintainer upload.
+  * Imported Upstream version 1.1.0
+  * Apply quilt patches with dh
+
+ -- Sebastian Schrader <sebastian.schrader@agdsn.de>  Wed, 16 Nov 2016 16:34:34 +0000
+
 isc-kea (1.0.0-3) unstable; urgency=medium
 
   * debian/patches/support_kfreebsd:
