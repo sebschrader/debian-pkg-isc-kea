@@ -1,29 +1,3 @@
-Index: isc-kea/src/lib/dhcpsrv/Makefile.in
-===================================================================
---- isc-kea.orig/src/lib/dhcpsrv/Makefile.in	2016-01-28 00:42:00.765652681 -0600
-+++ isc-kea/src/lib/dhcpsrv/Makefile.in	2016-01-28 00:42:00.761652719 -0600
-@@ -544,7 +544,7 @@
- top_srcdir = @top_srcdir@
- AUTOMAKE_OPTIONS = subdir-objects
- SUBDIRS = . testutils tests
--dhcp_data_dir = @localstatedir@/@PACKAGE@
-+dhcp_data_dir = @localstatedir@/lib/@PACKAGE@
- kea_lfc_location = @prefix@/sbin/kea-lfc
- # Set location of the kea-lfc binary.
- AM_CPPFLAGS = -I$(top_builddir)/src/lib -I$(top_srcdir)/src/lib \
-Index: isc-kea/src/lib/log/interprocess/Makefile.in
-===================================================================
---- isc-kea.orig/src/lib/log/interprocess/Makefile.in	2016-01-28 00:42:00.765652681 -0600
-+++ isc-kea/src/lib/log/interprocess/Makefile.in	2016-01-28 00:42:00.761652719 -0600
-@@ -401,7 +401,7 @@
- top_srcdir = @top_srcdir@
- SUBDIRS = . tests
- AM_CPPFLAGS = -I$(top_srcdir)/src/lib -I$(top_builddir)/src/lib \
--	-DLOCKFILE_DIR=\"$(localstatedir)/run/$(PACKAGE_NAME)\" \
-+	-DLOCKFILE_DIR=\"$(localstatedir)/run\" \
- 	$(BOOST_INCLUDES)
- AM_CXXFLAGS = $(KEA_CXXFLAGS)
- CLEANFILES = *.gcno *.gcda
 Index: isc-kea/src/lib/log/interprocess/interprocess_sync_file.cc
 ===================================================================
 --- isc-kea.orig/src/lib/log/interprocess/interprocess_sync_file.cc	2016-01-28 00:42:00.765652681 -0600
@@ -80,16 +54,42 @@ Index: isc-kea/src/bin/dhcp6/spec_config.h.pre.in
  
 -#define DHCP6_SPECFILE_LOCATION "@prefix@/share/@PACKAGE@/dhcp6.spec"
 +#define DHCP6_SPECFILE_LOCATION "@prefix@/share/kea-dhcp6/dhcp6.spec"
-Index: isc-kea/doc/guide/Makefile.in
+Index: isc-kea/doc/guide/Makefile.am
 ===================================================================
---- isc-kea.orig/doc/guide/Makefile.in	2015-12-28 14:25:52.000000000 -0600
-+++ isc-kea/doc/guide/Makefile.in	2016-01-28 00:43:22.584887938 -0600
-@@ -576,7 +576,7 @@
- 
+--- isc-kea.orig/doc/guide/Makefile.am
++++ isc-kea/doc/guide/Makefile.am
+@@ -15,7 +15,7 @@ EXTRA_DIST = $(DOCBOOK)
+ DISTCLEANFILES = $(HTMLDOCS) $(DOCS) kea-messages.xml
  
  kea-messages.xml:
 -	$(top_srcdir)/tools/system_messages -o $@ \
-+	../../tools/system_messages -o $@ \
++	$(top_builddir)/tools/system_messages -o $@ \
  	`find $(top_srcdir) -name "*.mes" -print`
  
  # This is not a "man" manual, but reuse this for now for docbook.
+Index: isc-kea/src/lib/dhcpsrv/Makefile.am
+===================================================================
+--- isc-kea.orig/src/lib/dhcpsrv/Makefile.am
++++ isc-kea/src/lib/dhcpsrv/Makefile.am
+@@ -2,7 +2,7 @@ AUTOMAKE_OPTIONS = subdir-objects
+ 
+ SUBDIRS = . testutils tests
+ 
+-dhcp_data_dir = @localstatedir@/@PACKAGE@
++dhcp_data_dir = @localstatedir@/lib/@PACKAGE@
+ kea_lfc_location = @prefix@/sbin/kea-lfc
+ 
+ AM_CPPFLAGS = -I$(top_builddir)/src/lib -I$(top_srcdir)/src/lib -DDHCP_DATA_DIR="\"$(dhcp_data_dir)\""
+Index: isc-kea/src/lib/log/interprocess/Makefile.am
+===================================================================
+--- isc-kea.orig/src/lib/log/interprocess/Makefile.am
++++ isc-kea/src/lib/log/interprocess/Makefile.am
+@@ -1,7 +1,7 @@
+ SUBDIRS = . tests
+ 
+ AM_CPPFLAGS = -I$(top_srcdir)/src/lib -I$(top_builddir)/src/lib
+-AM_CPPFLAGS += -DLOCKFILE_DIR=\"$(localstatedir)/run/$(PACKAGE_NAME)\"
++AM_CPPFLAGS += -DLOCKFILE_DIR=\"$(localstatedir)/run\"
+ AM_CPPFLAGS += $(BOOST_INCLUDES)
+ 
+ AM_CXXFLAGS = $(KEA_CXXFLAGS)

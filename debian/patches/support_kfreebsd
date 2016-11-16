@@ -1,22 +1,22 @@
-Index: isc-kea/configure
+Index: isc-kea/configure.ac
 ===================================================================
---- isc-kea.orig/configure	2016-03-01 00:18:59.277551067 -0600
-+++ isc-kea/configure	2016-03-01 00:18:59.273551106 -0600
-@@ -16008,7 +16008,7 @@
- fi
- rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+--- isc-kea.orig/configure.ac
++++ isc-kea/configure.ac
+@@ -326,7 +326,7 @@ case "$host" in
+ 	[AC_MSG_RESULT([OS X >= 10.9])
+ 	 kea_undefined_pthread_behavior=yes])
  	;;
 -*-freebsd*)
 +*-freebsd*|*-kfreebsd*)
  	# On FreeBSD10.1 pthread_cond_destroy doesn't work as documented, which
  	# causes the CondVarTest.destroyWhileWait test to fail. According to the
  	# pthread_cond_destroy documentation for FreeBSD, this function should
-@@ -16707,7 +16707,7 @@
+@@ -429,7 +429,7 @@ case $host in
        BSD_TYPE="OSX"
        CPPFLAGS="$CPPFLAGS -DOS_BSD"
        ;;
 -    *-freebsd*)
 +    *-freebsd*|*-kfreebsd*)
- 
- $as_echo "#define OS_BSD 1" >>confdefs.h
- 
+       AC_DEFINE([OS_BSD], [1], [Running on BSD?])
+       AC_DEFINE([OS_FREEBSD], [1], [Running on FreeBSD?])
+       OS_TYPE="BSD"
