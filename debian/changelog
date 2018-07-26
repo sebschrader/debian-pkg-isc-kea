@@ -1,3 +1,10 @@
+isc-kea (1.1.0-1zih1) unstable; urgency=medium
+
+  * Add authoritative flag to global config to NAK requests from unknown
+    clients
+
+ -- Sebastian Schrader <sebastian.schrader@tu-dresden.de>  Thu, 26 Jul 2018 07:50:29 +0000
+
 isc-kea (1.1.0-1) unstable; urgency=medium
 
   * New upstream version 1.1.0 (closes: #844536)
