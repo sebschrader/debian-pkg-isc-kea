@@ -17,7 +17,7 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 export DEB_CXXFLAGS_MAINT_STRIP = -O2
 
 %:
-	dh $@  --with autotools-dev --parallel -B
+	dh $@  --with autoreconf --parallel -B
 
 override_dh_auto_configure:
 	cat debian/conffiles.md5 | md5sum -c --status
